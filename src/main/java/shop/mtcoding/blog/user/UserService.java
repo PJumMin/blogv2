@@ -12,7 +12,16 @@ public class UserService {
     // UserJoin
     @Transactional
     public void join(UserRequest.JoinDTO joinDTO) {
-        userRepository.save(joinDTO.toEntity());
+        User user = joinDTO.toEntity(); // 1. 비영속 객체
+        System.out.println("비영속 user: " + user.getId());
+        userRepository.save(user);
+        // user 객체 = DB와 동기화 된 객체
+        System.out.println("영속/동기화 user: " + user.getId());
+
+//        TODO: 정리하기
+//        System.out.println("===============");
+//        userRepository.findById(3);
+//        System.out.println("===============");
     }
 
     public User login(UserRequest.LoginDTO loginDTO) {
