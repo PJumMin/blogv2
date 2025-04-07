@@ -9,6 +9,10 @@ import org.springframework.stereotype.Repository;
 public class UserRepository {
     private final EntityManager em;
 
+    public User findById(Integer id) {
+        return em.find(User.class, id);
+    }
+
     public User findByUsername(String username) {
         try {
             return em.createQuery("select u from User u where u.username = :username", User.class)

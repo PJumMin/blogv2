@@ -19,6 +19,29 @@ public class UserController {
     private final UserService userService;
     private final HttpSession session;
 
+    // UserUpdatePage
+    @GetMapping("/user/update-form")
+    public String updateForm() {
+        User sessionuser = (User) session.getAttribute("sessionUser");
+        if (sessionuser == null) throw new RuntimeException("로그인 후 사용해주세요.");
+
+        return "user/update-form";
+    }
+
+    // UserUpdate
+    @PostMapping("/user/update")
+    public String update(UserRequest.UpdateDTO updateDTO) {
+        User sessionuser = (User) session.getAttribute("sessionUser");
+        if (sessionuser == null) throw new RuntimeException("로그인 후 사용해주세요.");
+
+        User user = userService.회원정보수정(updateDTO, sessionuser.getId());
+
+        // 세션 동기화
+        session.setAttribute("sessionUser", user);
+
+        return "redirect:/";
+    }
+
     // CheckUsername
     @GetMapping("/check-username-available/{username}")
     public @ResponseBody Resp<?> checkUsernameAvailable(@PathVariable("username") String username) {
