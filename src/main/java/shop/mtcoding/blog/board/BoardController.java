@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import shop.mtcoding.blog.user.User;
 
@@ -13,6 +14,16 @@ import shop.mtcoding.blog.user.User;
 public class BoardController {
     private final BoardService boardService;
     private final HttpSession session;
+
+    // BoardDetail
+    @GetMapping("/board/{id}")
+    public String detail(@PathVariable("id") int id, HttpServletRequest request) {
+        User sessionuser = (User) session.getAttribute("sessionUser");
+        BoardResponse.DetailDTO detailDTO = boardService.글상세보기(id, sessionuser.getId());
+        request.setAttribute("model", detailDTO);
+        return "board/detail";
+    }
+
 
     // BoardList
     @GetMapping("/")

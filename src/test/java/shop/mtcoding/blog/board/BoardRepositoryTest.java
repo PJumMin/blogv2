@@ -5,8 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 
-import java.util.List;
-
 @Import(BoardRepository.class) // BoardRepository
 @DataJpaTest // EntityManager, PC
 public class BoardRepositoryTest {
@@ -17,10 +15,10 @@ public class BoardRepositoryTest {
     @Test
     public void findAll_test() {
         // given
-        Integer userId = 1;
+        Integer id = 1;
 
         // when
-        List<Board> boardList = boardRepository.findAll(userId);
+        Board board = boardRepository.findByIdJoinUser(id);
 
 //        // Lazy -> Board -> User(id=1)
 //        // Eager -> N+1  -> Board조회 -> 연관된 User 유저 수 만큼 주회
@@ -29,10 +27,5 @@ public class BoardRepositoryTest {
 //        boardList.get(0).getUser().getUsername();
 //        System.out.println("--------------------");
         // eye
-        for (Board board : boardList) {
-            System.out.print(board.getId() + " " + board.getTitle());
-            System.out.println();
-        }
-        ;
     }
 }
