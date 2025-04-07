@@ -15,7 +15,7 @@ public class BoardRequest {
             return Board.builder()
                     .title(title)
                     .content(content)
-                    .isPublic(isPublic.equals("on") ? true : false)
+                    .isPublic(isPublic == null ? false : true)
                     .user(user) //user객체 필요
                     .build();
         }

@@ -63,7 +63,7 @@ public class UserController {
             response.addCookie(cookie);
         }
 
-        return "redirect:/login-form";
+        return "redirect:/";
     }
 
     // logout
