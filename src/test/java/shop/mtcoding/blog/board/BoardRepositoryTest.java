@@ -15,10 +15,12 @@ public class BoardRepositoryTest {
     @Test
     public void findAll_test() {
         // given
-        Integer id = 1;
+        Integer userid = 1;
+        Integer boardid = 4;
 
         // when
-        Board board = boardRepository.findByIdJoinUser(id);
+        BoardResponse.DetailDTO detailDTO = boardRepository.findDetail(boardid, userid);
+        System.out.println(detailDTO);
 
 //        // Lazy -> Board -> User(id=1)
 //        // Eager -> N+1  -> Board조회 -> 연관된 User 유저 수 만큼 주회

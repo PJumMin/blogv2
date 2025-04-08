@@ -25,8 +25,8 @@ public class BoardService {
     }
 
     public BoardResponse.DetailDTO 글상세보기(Integer id, Integer userId) {
-
-        return null;
+        BoardResponse.DetailDTO detailDTO = boardRepository.findDetail(id, userId);
+        return detailDTO;
     }
 
 }
