@@ -18,8 +18,8 @@ public class BoardController {
     // BoardDetail
     @GetMapping("/board/{id}")
     public String detail(@PathVariable("id") int id, HttpServletRequest request) {
-        User sessionuser = (User) session.getAttribute("sessionUser");
-        Integer sessionUserId = (sessionuser == null ? null : sessionuser.getId());
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        Integer sessionUserId = (sessionUser == null ? null : sessionUser.getId());
         BoardResponse.DetailDTO detailDTO = boardService.글상세보기(id, sessionUserId);
         request.setAttribute("model", detailDTO);
         return "board/detail";
@@ -29,11 +29,11 @@ public class BoardController {
     // BoardList
     @GetMapping("/")
     public String list(HttpServletRequest request) {
-        User sessionuser = (User) session.getAttribute("sessionUser");
-        if (sessionuser == null) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        if (sessionUser == null) {
             request.setAttribute("models", boardService.글목록보기(null));
         } else {
-            request.setAttribute("models", boardService.글목록보기(sessionuser.getId()));
+            request.setAttribute("models", boardService.글목록보기(sessionUser.getId()));
         }
         return "board/list";
     }
@@ -41,17 +41,17 @@ public class BoardController {
     // BoardSavePage
     @GetMapping("/board/save-form")
     public String saveForm() {
-        User sessionuser = (User) session.getAttribute("sessionUser");
-        if (sessionuser == null) throw new RuntimeException("로그인 후 사용해주세요.");
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        if (sessionUser == null) throw new RuntimeException("로그인 후 사용해주세요.");
         return "board/save-form";
     }
 
     // BoardSave
     @PostMapping("/board/save")
     public String save(BoardRequest.SaveDTO saveDTO) {
-        User sessionuser = (User) session.getAttribute("sessionUser");
-        if (sessionuser == null) throw new RuntimeException("로그인 후 사용해주세요.");
-        boardService.글쓰기(saveDTO, sessionuser);
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        if (sessionUser == null) throw new RuntimeException("로그인 후 사용해주세요.");
+        boardService.글쓰기(saveDTO, sessionUser);
         return "redirect:/";
     }
 
