@@ -18,6 +18,12 @@ public class BoardRepository {
         return (Board) query.getSingleResult();
     }
 
+    public Board findByIdJoinUserAndReplies(Integer id) {
+        Query query = em.createQuery("select b from Board b join fetch b.user left join fetch b.replies r left join fetch r.user u where b.id = :id", Board.class);
+        query.setParameter("id", id);
+        return (Board) query.getSingleResult();
+    }
+
     public void save(Board board) {
         em.persist(board);
     }
