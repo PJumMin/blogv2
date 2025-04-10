@@ -17,6 +17,7 @@ public class BoardService {
     private final LoveRepository loveRepository;
     private final ReplyRepository replyRepository;
 
+
     @Transactional
     public void 글쓰기(BoardRequest.SaveDTO saveDTO, User sessionuser) {
         Board board = saveDTO.toEntity(sessionuser);

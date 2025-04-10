@@ -1,6 +1,7 @@
 package shop.mtcoding.blog.reply;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -21,7 +22,7 @@ public class Reply {
 
     private String content; // 댓글 내용
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,4 +30,13 @@ public class Reply {
 
     @CreationTimestamp
     private Timestamp createdAt;
+
+    @Builder
+    public Reply(Integer id, String content, User user, Board board, Timestamp createdAt) {
+        this.id = id;
+        this.content = content;
+        this.user = user;
+        this.board = board;
+        this.createdAt = createdAt;
+    }
 }

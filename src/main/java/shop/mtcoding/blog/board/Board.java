@@ -28,7 +28,7 @@ public class Board {
     private User user; // ORM
 
     // 조회의 용도 - 테이블이 만들어지지 않음
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Reply> replies = new ArrayList<>();
 
     @CreationTimestamp
