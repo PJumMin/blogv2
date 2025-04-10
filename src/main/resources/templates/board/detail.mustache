@@ -61,12 +61,14 @@
             {{#model.replies}}
                 <div class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="d-flex">
-                        <div class="px-1 me-1 bg-primary text-white rounded">{{user.username}}</div>
+                        <div class="px-1 me-1 bg-primary text-white rounded">{{username}}</div>
                         <div>{{content}}</div>
                     </div>
-                    <form action="/reply/1/delete" method="post">
-                        <button class="btn">🗑</button>
-                    </form>
+                    {{#isOwner}}
+                        <form action="/reply/{{id}}/delete" method="post">
+                            <button class="btn">🗑</button>
+                        </form>
+                    {{/isOwner}}
                 </div>
             {{/model.replies}}
         </div>
