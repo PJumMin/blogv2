@@ -1,6 +1,7 @@
 package shop.mtcoding.blog.reply;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ public class Reply {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotEmpty(message = "내용을 입력하세요")
     private String content; // 댓글 내용
 
     @ManyToOne(fetch = FetchType.LAZY)
