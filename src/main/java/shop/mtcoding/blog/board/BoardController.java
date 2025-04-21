@@ -49,6 +49,7 @@ public class BoardController {
         return "board/detail";
     }
 
+
     //localhost:8080?page=0
     //localhost:8080 둘 중 어느게 들어올지 모름
     @GetMapping("/")

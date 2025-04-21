@@ -14,14 +14,30 @@ public class BoardResponse {
         private List<Board> boards;
         private Integer prev; // 이전 페이지
         private Integer next; // 다음 페이지
-        private Boolean isFirst; // 첫 페이지
-        private Boolean isLast; // 마지막 페이지
+        private Integer current;
+        private Integer size;
+        private Integer totalCount;
+        private Integer totalPage;
+        private Boolean isFirst; // 첫 페이지 current == 0
+        private Boolean isLast; // 마지막 페이지 totalCount, size = 3 totalPage == current
+        private List<Integer> numbers; // 20개 [1,2,3,4,5,6,7] -> model.numbers -> {{.}}
 
-        public DTO(List<Board> boards, Integer prev, Integer next) {
+        public DTO(List<Board> boards, Integer current, Integer totalCount) {
             this.boards = boards;
-            this.prev = prev;
-            this.next = next;
+            this.prev = current - 1;
+            this.next = current + 1;
+            this.size = 3;
+            this.totalCount = totalCount; // given
+            this.totalPage = makeTotalPage(totalCount, size);
+            this.isFirst = current == 0;
+            this.isLast = (totalPage - 1) == current;
         }
+
+        private Integer makeTotalPage(int totalCount, int size) {
+            int rest = totalCount % size > 0 ? 1 : 0;
+            return totalCount / size + rest;
+        }
+
     }
 
     // 상세보기 화면에 필요한 데이터
