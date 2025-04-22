@@ -42,12 +42,14 @@ public class BoardService {
         if (userId == null) {
             Long totalCount = boardRepository.totalCount();
             List<Board> boards = boardRepository.findAll(page);
+            System.out.println("로그인 x : " + totalCount);
             return new BoardResponse.DTO(boards, page, totalCount.intValue());
             // return boardRepository.findAll(page);
 
         } else {
             Long totalCount = boardRepository.totalCount(userId);
             List<Board> boards = boardRepository.findAll(userId, page);
+            System.out.println("로그인 O : " + totalCount);
             return new BoardResponse.DTO(boards, page, totalCount.intValue());
             // return boardRepository.findAll(userId, page);
         }

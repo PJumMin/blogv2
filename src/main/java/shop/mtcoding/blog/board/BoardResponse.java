@@ -22,6 +22,7 @@ public class BoardResponse {
         private Boolean isLast; // 마지막 페이지 totalCount, size = 3 totalPage == current
         private List<Integer> numbers; // 20개 [1,2,3,4,5,6,7] -> model.numbers -> {{.}}
 
+
         public DTO(List<Board> boards, Integer current, Integer totalCount) {
             this.boards = boards;
             this.prev = current - 1;
@@ -31,6 +32,7 @@ public class BoardResponse {
             this.totalPage = makeTotalPage(totalCount, size);
             this.isFirst = current == 0;
             this.isLast = (totalPage - 1) == current;
+            this.numbers = makeNumbers(current, totalPage);
         }
 
         private Integer makeTotalPage(int totalCount, int size) {
@@ -38,6 +40,18 @@ public class BoardResponse {
             return totalCount / size + rest;
         }
 
+        private List<Integer> makeNumbers(int current, int totalPage) {
+            List<Integer> numbers = new ArrayList<>();
+
+            int start = (current / 5) * 5;
+            int end = Math.min(start + 5, totalPage);
+
+            for (int i = start; i < end; i++) {
+                numbers.add(i);
+            }
+
+            return numbers;
+        }
     }
 
     // 상세보기 화면에 필요한 데이터
