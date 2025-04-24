@@ -21,21 +21,37 @@ public class BoardResponse {
         private Boolean isFirst; // 첫 페이지 current == 0
         private Boolean isLast; // 마지막 페이지 totalCount, size = 3 totalPage == current
         private List<Integer> numbers; // 20개 [1,2,3,4,5,6,7] -> model.numbers -> {{.}}
+        private String keyword;
 
-        public DTO(List<Board> boards, Integer current, Integer totalCount) {
+        public DTO(List<Board> boards, Integer current, Integer totalCount, String keyword) {
             this.boards = boards;
             this.prev = current - 1;
             this.next = current + 1;
             this.size = 3;
             this.totalCount = totalCount; // given
-            this.totalPage = makeTotalPage(totalCount, size);
+            this.totalPage = makeTotalPage(totalCount, size); // 2
             this.isFirst = current == 0;
             this.isLast = (totalPage - 1) == current;
+            this.numbers = makeNumbers(current, totalPage);
+            this.keyword = keyword; // 경우의 수 : keyword 값이 있거나, keyword null이거나
         }
 
         private Integer makeTotalPage(int totalCount, int size) {
             int rest = totalCount % size > 0 ? 1 : 0;
             return totalCount / size + rest;
+        }
+
+        private List<Integer> makeNumbers(int current, int totalPage) {
+            List<Integer> numbers = new ArrayList<>();
+
+            int start = (current / 5) * 5;
+            int end = Math.min(start + 5, totalPage);
+
+            for (int i = start; i < end; i++) {
+                numbers.add(i);
+            }
+
+            return numbers;
         }
 
     }

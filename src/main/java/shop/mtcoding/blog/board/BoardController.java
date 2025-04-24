@@ -38,6 +38,7 @@ public class BoardController {
         BoardResponse.DetailDTO detailDTO = boardService.글상세보기(id, sessionUserId);
 
         return detailDTO;
+
     }
 
     @GetMapping("/board/{id}")
@@ -53,13 +54,15 @@ public class BoardController {
     //localhost:8080?page=0
     //localhost:8080 둘 중 어느게 들어올지 모름
     @GetMapping("/")
-    public String list(HttpServletRequest request, @RequestParam(required = false, value = "page", defaultValue = "0") Integer page) {
+    public String list(HttpServletRequest request, @RequestParam(required = false, value = "page", defaultValue = "0") Integer page,
+                       @RequestParam(required = false, value = "keyword", defaultValue = "") String keyword) {
+        System.out.println("keyword : " + keyword);
         User sessionUser = (User) session.getAttribute("sessionUser");
 
         if (sessionUser == null) {
-            request.setAttribute("model", boardService.글목록보기(null, page));
+            request.setAttribute("model", boardService.글목록보기(null, page, keyword));
         } else {
-            request.setAttribute("model", boardService.글목록보기(sessionUser.getId(), page));
+            request.setAttribute("model", boardService.글목록보기(sessionUser.getId(), page, keyword));
         }
 
         return "board/list";
